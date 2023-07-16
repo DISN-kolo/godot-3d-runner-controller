@@ -19,26 +19,33 @@ var t_bob = 0.0
 #fov
 const FOV_BASE = 90
 const FOV_CHANGE = 1
+const FOV_ZOOM = 35.0
+var movement_multiplier = 1.0 # for crouching
 
 
 var gravity = 18
 
 @onready var head = $Node3D
 @onready var camera = $Node3D/Camera3D
-@onready var frontal_raycasts = $Frontnode
+@onready var frontnode = $Frontnode2
+@onready var one_frontal_raycast = $Frontnode2/FrontalRaycast
 @onready var upper_raycasts = $Headnode
-#@onready var   floor_checker = $Downernode/FloorChecker
+@onready var hud = $Node3D/CanvasLayer/interface
+@onready var collision = $CollisionShape3D
+@onready var mesh = $MeshInstance3D
 
 var is_climbing = false
+var is_crouching = false
 var climb_point : Vector3
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	hud.visible = false
 
 func _unhandled_input(event):
 	if event is InputEventMouseMotion:
 		head.rotate_y(-event.relative.x * SENSITIVITY)
-		frontal_raycasts.rotate_y(-event.relative.x * SENSITIVITY)
+		one_frontal_raycast.rotate_y(-event.relative.x * SENSITIVITY)
 		upper_raycasts.rotate_y(-event.relative.x * SENSITIVITY)
 		camera.rotate_x(-event.relative.y * SENSITIVITY)
 		camera.rotation.x = clamp(camera.rotation.x, -PI/2, PI/2)
@@ -51,7 +58,28 @@ func _physics_process(delta):
 		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		else: Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		
+	
+	# crouching
+	if Input.is_action_just_pressed("crouch"):
+		is_crouching = not is_crouching
+		if is_crouching:
+			movement_multiplier = 0.5
+			collision.scale.y = 0.5
+			collision.position.y = 0.5001
+			mesh.scale.y = 0.5
+			mesh.position.y = 0.5
+			head.position.y = 1.0
+			upper_raycasts.position.y = -0.5
+			frontnode.scale.y = 0.5
+		else:
+			movement_multiplier = 1.0
+			collision.scale.y = 1.0
+			collision.position.y = 1.0001
+			mesh.scale.y = 1.0
+			mesh.position.y = 1.0
+			head.position.y = 1.51
+			upper_raycasts.position.y = 0.0
+			frontnode.scale.y = 1.0
 	# Add the gravity.
 	if not is_on_floor():
 #		if not can_climb():
@@ -61,43 +89,43 @@ func _physics_process(delta):
 		first_jump = true
 		floorer = 1.0
 		# handle sprint. ground shift only
-		if Input.is_action_pressed("sprint"):
-			speed = SPRINT_SPEED * delta * 100
+		if Input.is_action_pressed("sprint") and not is_crouching:
+			speed = SPRINT_SPEED * delta * 100 * movement_multiplier
 		else:
-			speed = WALK_SPEED * delta * 100
+			speed = WALK_SPEED * delta * 100 * movement_multiplier
 
 	# Handle Jump.
+	if can_climb():
+		hud.visible = true
+	else:
+		hud.visible = false
 	if Input.is_action_just_pressed("ui_accept"):
+		one_frontal_raycast.position.y = 1.9
 		if can_climb() and not is_climbing:
 			is_climbing = true 
-##			print(frontal_raycast.get_global_position())
-##			print(frontal_raycast.get_collision_point() - frontal_raycast.get_global_position())
-#			floor_checker.set_global_position(frontal_raycast.get_collision_point() + Vector3(0, 1, 0))
-#			floor_checker.force_raycast_update()
-#			if not floor_checker.is_colliding():
-#				print("climb can't be initiated")
-#			climb_point = floor_checker.get_collision_point()
-#			print(floor_checker.get_global_position())
-#			print(climb_point)
 			var colpoint : Vector3
-			var frontal_raycast_children = frontal_raycasts.get_children()
 			var results : Dictionary
-			for i in range(3):
-				print(frontal_raycast_children[i].name)
-				if frontal_raycast_children[i].is_colliding():
-#					print(frontal_raycast_children[i].get_collision_point() + Vector3(0.1, 1.1, 0).rotated(Vector3.UP, frontal_raycasts.rotation_degrees.y))
-#					print(frontal_raycast_children[i].get_collision_point() + Vector3(0.1, -0.1, 0).rotated(Vector3.UP, frontal_raycasts.rotation_degrees.y))
+			for i in range(19, 0, -1):
+				one_frontal_raycast.position.y = i/10.0
+				one_frontal_raycast.force_raycast_update()
+#				print(one_frontal_raycast.position)
+#				print(one_frontal_raycast.rotation_degrees)
+#				print(one_frontal_raycast.get_collision_point() +
+#					Vector3(0, 1.1, -0.15).rotated(Vector3.UP, one_frontal_raycast.rotation.y),
+#					one_frontal_raycast.get_collision_point() +
+#					Vector3(0, -0.1, -0.15).rotated(Vector3.UP, one_frontal_raycast.rotation.y))
+				if one_frontal_raycast.is_colliding():
 					results = space.intersect_ray(
 						PhysicsRayQueryParameters3D.create(
-							frontal_raycast_children[i].get_collision_point() +
-							Vector3(0, 1.1, -0.15).rotated(Vector3.UP, frontal_raycasts.rotation.y),
-							frontal_raycast_children[i].get_collision_point() +
-							Vector3(0, -0.1, -0.15).rotated(Vector3.UP, frontal_raycasts.rotation.y)
+							one_frontal_raycast.get_collision_point() +
+							Vector3(0, 1.1, -0.15).rotated(Vector3.UP, one_frontal_raycast.rotation.y),
+							one_frontal_raycast.get_collision_point() +
+							Vector3(0, -0.1, -0.15).rotated(Vector3.UP, one_frontal_raycast.rotation.y)
 						)
 					)
-					print(frontal_raycasts.rotation_degrees.y)
-					print(results)
+#					print(results)
 					break
+				
 			if results.is_empty():
 				is_climbing = false
 				if first_jump and floorer > 0.001: #leniency = = = 
@@ -108,9 +136,7 @@ func _physics_process(delta):
 			var tween = create_tween().parallel()
 			tween.tween_property(self, "position", climb_point, 0.7).set_trans(Tween.TRANS_EXPO)
 			tween.tween_callback(func(): is_climbing = false)
-			tween.tween_callback(func(): print("finished climb!"))
-#			is_climbing = false
-#			print("climbing module reached \"false\"")
+#			tween.tween_callback(func(): print("finished climb!"))
 		elif first_jump and floorer > 0.001: #leniency ^^^
 			first_jump = false
 			velocity.y = JUMP_VELOCITY
@@ -132,14 +158,19 @@ func _physics_process(delta):
 	else:
 		velocity.x = lerp(velocity.x, direction.x * speed, 3.0 * delta)
 		velocity.z = lerp(velocity.z, direction.z * speed, 3.0 * delta)
-	
+#	if Input.is_action_pressed("zoom"):
+#		velocity /= 2.
+#   this needs better implementation as it just slows everything down lol
 	move_and_slide()
 	
 	# camera fov
 	var fov_velocity_clamped = clamp(Vector2(velocity.x, velocity.z).length(), 0, SPRINT_SPEED * 2)
 	var fov_target = FOV_BASE + FOV_CHANGE * fov_velocity_clamped
+	if Input.is_action_pressed("zoom"): #zoomy zooms
+		fov_target = FOV_ZOOM
 	camera.fov = lerp(camera.fov, fov_target, 20.0 * delta)
-	
+#	if Input.is_action_just_released("zoom"):
+#		camera.fov = lerp
 	# camera bob
 	if Vector2(velocity.x, velocity.z).length() < 0.001 or not(is_on_floor()):
 		camera.transform.origin = lerp(camera.transform.origin, Vector3.ZERO, 4.0 * delta)
@@ -156,15 +187,13 @@ func _headbob(time) -> Vector3:
 	return pos
 
 func can_climb():
-	var collided_fronts = 0
-	for frontalcast in frontal_raycasts.get_children():
-		if frontalcast.is_colliding():
-			collided_fronts+=1
-	if collided_fronts <1:
-		return false
+	var can_climb_var = false
+	for i in range(19, 0, -1):
+		one_frontal_raycast.position.y = i/10.0
+		if one_frontal_raycast.is_colliding():
+			can_climb_var = true
 	for oneraycast in upper_raycasts.get_children():
 		if oneraycast.is_colliding():
-			return false
-#	if not floor_checker.is_colliding():
-#		return false
-	return true
+			can_climb_var = false
+#	print("can climb")
+	return can_climb_var

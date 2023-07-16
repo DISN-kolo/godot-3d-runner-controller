@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://dwrewdb6s3leg"]
+[gd_scene load_steps=15 format=3 uid="uid://dwrewdb6s3leg"]
 
 [ext_resource type="Script" path="res://scripts/OurGuy.gd" id="1_lkfqk"]
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_srwds"]
 [ext_resource type="Material" uid="uid://d0gbmbw5hymx3" path="res://misc/new_standard_material_3d.tres" id="2_q3oq4"]
+[ext_resource type="PackedScene" uid="uid://c41xhih56iy40" path="res://interface.tscn" id="3_a8o88"]
 [ext_resource type="PackedScene" uid="uid://fyaqa0t3dt76" path="res://scenes/sloper_gamer_level_1.tscn" id="4_oj3ms"]
 [ext_resource type="PackedScene" uid="uid://bllli5dshgdg4" path="res://scenes/testcollclimb.tscn" id="5_d83e8"]
 
@@ -50,10 +51,14 @@ shadow_enabled = true
 environment = SubResource("Environment_cro1d")
 
 [node name="Player" type="CharacterBody3D" parent="."]
+wall_min_slide_angle = 0.785398
+floor_constant_speed = true
+floor_max_angle = 0.959931
 script = ExtResource("1_lkfqk")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+cast_shadow = 3
 mesh = SubResource("CapsuleMesh_3aa12")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
@@ -64,6 +69,10 @@ shape = SubResource("ConvexPolygonShape3D_6xhfx")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.50967, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Player/Node3D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Player/Node3D"]
+
+[node name="interface" parent="Player/Node3D/CanvasLayer" instance=ExtResource("3_a8o88")]
 
 [node name="Headnode" type="Node3D" parent="Player"]
 
@@ -91,112 +100,79 @@ target_position = Vector3(0, 0, -2.828)
 transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0.5, 2, 0)
 target_position = Vector3(0, 0, -2.828)
 
-[node name="Frontnode" type="Node3D" parent="Player"]
+[node name="Frontnode2" type="Node3D" parent="Player"]
 
-[node name="FrontalRaycast3" type="RayCast3D" parent="Player/Frontnode"]
+[node name="FrontalRaycast" type="RayCast3D" parent="Player/Frontnode2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9, 0)
 target_position = Vector3(0, 0, -1.2)
 debug_shape_custom_color = Color(1, 1, 1, 1)
 debug_shape_thickness = 3
 
-[node name="SpotLight3D" type="SpotLight3D" parent="Player/Frontnode/FrontalRaycast3"]
-light_energy = 4.071
-light_volumetric_fog_energy = 16.0
-spot_range = 1.2
-spot_angle = 1.0
-
-[node name="FrontalRaycast2" type="RayCast3D" parent="Player/Frontnode"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-target_position = Vector3(0, 0, -1.2)
-debug_shape_custom_color = Color(1, 1, 1, 1)
-debug_shape_thickness = 3
-
-[node name="SpotLight3D2" type="SpotLight3D" parent="Player/Frontnode/FrontalRaycast2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.96046e-08, 0)
-light_energy = 4.071
-light_volumetric_fog_energy = 16.0
-spot_range = 1.2
-spot_angle = 1.0
-
-[node name="FrontalRaycast" type="RayCast3D" parent="Player/Frontnode"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
-target_position = Vector3(0, 0, -1.2)
-debug_shape_custom_color = Color(1, 1, 1, 1)
-debug_shape_thickness = 3
-
-[node name="SpotLight3D3" type="SpotLight3D" parent="Player/Frontnode/FrontalRaycast"]
+[node name="SpotLight3D3" type="SpotLight3D" parent="Player/Frontnode2/FrontalRaycast"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.68575e-08, 0)
 light_energy = 4.071
 light_volumetric_fog_energy = 16.0
 spot_range = 1.2
 spot_angle = 1.0
 
-[node name="Downernode" type="Node3D" parent="Player"]
-visible = false
-
-[node name="FloorChecker" type="RayCast3D" parent="Player/Downernode"]
-visible = false
-target_position = Vector3(0, -2, 0)
-debug_shape_custom_color = Color(0.290196, 0.290196, 0.290196, 1)
-
-[node name="Node3D" type="Node3D" parent="."]
+[node name="LevelCSG" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -17, 0)
 
-[node name="CSGBox3D" type="CSGBox3D" parent="Node3D"]
+[node name="CSGBox3D" type="CSGBox3D" parent="LevelCSG"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -4)
 use_collision = true
 size = Vector3(28, 0.002, 32)
 material = ExtResource("2_q3oq4")
 
-[node name="CSGBox3D2" type="CSGBox3D" parent="Node3D"]
+[node name="CSGBox3D2" type="CSGBox3D" parent="LevelCSG"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 2, -4)
 use_collision = true
 size = Vector3(1, 4, 32)
 material = ExtResource("2_q3oq4")
 
-[node name="CSGBox3D3" type="CSGBox3D" parent="Node3D"]
+[node name="CSGBox3D3" type="CSGBox3D" parent="LevelCSG"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 2, -4)
 use_collision = true
 size = Vector3(1, 4, 32)
 material = ExtResource("2_q3oq4")
 
-[node name="CSGBox3D4" type="CSGBox3D" parent="Node3D"]
+[node name="CSGBox3D4" type="CSGBox3D" parent="LevelCSG"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, 12)
 use_collision = true
 size = Vector3(28, 4, 1)
 material = ExtResource("2_q3oq4")
 
-[node name="CSGBox3D5" type="CSGBox3D" parent="Node3D"]
+[node name="CSGBox3D5" type="CSGBox3D" parent="LevelCSG"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, -20)
 use_collision = true
 size = Vector3(28, 4, 1)
 material = ExtResource("2_q3oq4")
 
-[node name="CSGBox3D6" type="CSGBox3D" parent="Node3D"]
+[node name="CSGBox3D6" type="CSGBox3D" parent="LevelCSG"]
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 2.22876, 1, -6.4379)
 use_collision = true
 size = Vector3(2, 2, 2)
 material = SubResource("StandardMaterial3D_adqw4")
 
-[node name="CSGBox3D10" type="CSGBox3D" parent="Node3D"]
+[node name="CSGBox3D10" type="CSGBox3D" parent="LevelCSG"]
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 3.02876, 1, -0.5379)
 use_collision = true
 size = Vector3(2.2, 0.8, 2.8)
 material = SubResource("StandardMaterial3D_adqw4")
 
-[node name="CSGBox3D9" type="CSGBox3D" parent="Node3D"]
+[node name="CSGBox3D9" type="CSGBox3D" parent="LevelCSG"]
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 5.42876, 7.9, -1.1379)
 use_collision = true
 size = Vector3(1, 5.2, 2)
 material = SubResource("StandardMaterial3D_adqw4")
 
-[node name="CSGBox3D7" type="CSGBox3D" parent="Node3D"]
+[node name="CSGBox3D7" type="CSGBox3D" parent="LevelCSG"]
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 5.7643, 2, -2.90237)
 use_collision = true
 size = Vector3(4, 4, 4)
 material = SubResource("StandardMaterial3D_wws5p")
 
-[node name="CSGBox3D8" type="CSGBox3D" parent="Node3D"]
+[node name="CSGBox3D8" type="CSGBox3D" parent="LevelCSG"]
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 10.0069, 3, 1.34027)
 use_collision = true
 size = Vector3(2, 6, 6)

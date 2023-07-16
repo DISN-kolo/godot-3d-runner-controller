@@ -115,6 +115,13 @@ light_volumetric_fog_energy = 16.0
 spot_range = 1.2
 spot_angle = 1.0
 
+[node name="upcheck" type="Node3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="RayCast3D" type="RayCast3D" parent="Player/upcheck"]
+target_position = Vector3(0, 0.995, 0)
+debug_shape_custom_color = Color(1, 0, 0, 1)
+
 [node name="LevelCSG" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -17, 0)
 

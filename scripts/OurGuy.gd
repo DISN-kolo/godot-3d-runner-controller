@@ -33,6 +33,7 @@ var gravity = 18
 @onready var hud = $Node3D/CanvasLayer/interface
 @onready var collision = $CollisionShape3D
 @onready var mesh = $MeshInstance3D
+@onready var upcheck = $upcheck/RayCast3D
 
 var is_climbing = false
 var is_crouching = false
@@ -61,25 +62,41 @@ func _physics_process(delta):
 	
 	# crouching
 	if Input.is_action_just_pressed("crouch"):
-		is_crouching = not is_crouching
-		if is_crouching:
-			movement_multiplier = 0.5
-			collision.scale.y = 0.5
-			collision.position.y = 0.5001
-			mesh.scale.y = 0.5
-			mesh.position.y = 0.5
-			head.position.y = 1.0
-			upper_raycasts.position.y = -0.5
-			frontnode.scale.y = 0.5
-		else:
-			movement_multiplier = 1.0
-			collision.scale.y = 1.0
-			collision.position.y = 1.0001
-			mesh.scale.y = 1.0
-			mesh.position.y = 1.0
-			head.position.y = 1.51
-			upper_raycasts.position.y = 0.0
-			frontnode.scale.y = 1.0
+		upcheck.force_raycast_update()
+		if is_crouching and not upcheck.is_colliding():
+			is_crouching = false
+		elif not is_crouching:
+			is_crouching = true
+#		print("crouchpress")
+#		if is_crouching:
+#			print("crouching already")
+#			upcheck.force_raycast_update()
+#		if not upcheck.is_colliding():
+#			print("roof is clean")
+#			is_crouching = not is_crouching
+#			print("current crouching status changed to ", is_crouching)
+#		else:
+		if not upcheck.is_colliding():
+			if is_crouching:
+				print("beginning crouch")
+				movement_multiplier = 0.5
+				collision.scale.y = 0.5
+				collision.position.y = 0.5001
+				mesh.scale.y = 0.5
+				mesh.position.y = 0.5
+				head.position.y = 1.0
+				upper_raycasts.position.y = -0.5
+				frontnode.scale.y = 0.5
+			elif not is_crouching:
+				print("ending crouch")
+				movement_multiplier = 1.0
+				collision.scale.y = 1.0
+				collision.position.y = 1.0001
+				mesh.scale.y = 1.0
+				mesh.position.y = 1.0
+				head.position.y = 1.51
+				upper_raycasts.position.y = 0.0
+				frontnode.scale.y = 1.0
 	# Add the gravity.
 	if not is_on_floor():
 #		if not can_climb():
@@ -190,9 +207,11 @@ func can_climb():
 	var can_climb_var = false
 	for i in range(19, 0, -1):
 		one_frontal_raycast.position.y = i/10.0
+		one_frontal_raycast.force_raycast_update()
 		if one_frontal_raycast.is_colliding():
 			can_climb_var = true
 	for oneraycast in upper_raycasts.get_children():
+		oneraycast.force_raycast_update()
 		if oneraycast.is_colliding():
 			can_climb_var = false
 #	print("can climb")

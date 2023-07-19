@@ -85,7 +85,7 @@ func _physics_process(delta):
 				mesh.scale.y = 0.5
 				mesh.position.y = 0.5
 				head.position.y = 1.0
-				upper_raycasts.position.y = -0.5
+				upper_raycasts.position.y = -1.05
 				frontnode.scale.y = 0.5
 			elif not is_crouching:
 				print("ending crouch")
@@ -116,7 +116,7 @@ func _physics_process(delta):
 		hud.visible = true
 	else:
 		hud.visible = false
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_pressed("ui_accept"):
 		one_frontal_raycast.position.y = 1.9
 		if can_climb() and not is_climbing:
 			is_climbing = true 
@@ -154,7 +154,8 @@ func _physics_process(delta):
 			tween.tween_property(self, "position", climb_point, 0.7).set_trans(Tween.TRANS_EXPO)
 			tween.tween_callback(func(): is_climbing = false)
 #			tween.tween_callback(func(): print("finished climb!"))
-		elif first_jump and floorer > 0.001: #leniency ^^^
+	if Input.is_action_just_pressed("ui_accept"):
+		if first_jump and floorer > 0.001 and not (can_climb() and not is_climbing): #leniency ^^^
 			first_jump = false
 			velocity.y = JUMP_VELOCITY
 

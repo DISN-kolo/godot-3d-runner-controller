@@ -14,6 +14,7 @@ sky_material = SubResource("ProceduralSkyMaterial_ie388")
 [sub_resource type="Environment" id="Environment_cro1d"]
 background_mode = 2
 sky = SubResource("Sky_ewmib")
+ambient_light_source = 3
 ssil_intensity = 3.02
 sdfgi_use_occlusion = true
 sdfgi_cascades = 8

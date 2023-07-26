@@ -29,6 +29,7 @@ shape = SubResource("ConvexPolygonShape3D_6xhfx")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.50967, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Node3D"]
+current = true
 
 [node name="flashlight or something lol" type="SpotLight3D" parent="Node3D/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, -0.50967, -0.3)

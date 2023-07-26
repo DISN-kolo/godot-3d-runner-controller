@@ -10,6 +10,7 @@ const SPRINT_SPEED = 4.0
 #allows for after-ledge jumps
 var floorer = 1.0
 var first_jump = true
+var fresh_jump = 1.0 #prevent climb-jumps
 
 #bob moment
 const BOB_FREQ = 2.0
@@ -38,6 +39,8 @@ var gravity = 18
 var is_climbing = false
 var is_crouching = false
 var climb_point : Vector3
+var old_point : Vector3
+var old_head_pos_relative : Vector3
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -150,29 +153,39 @@ func _physics_process(delta):
 					velocity.y = JUMP_VELOCITY
 				return
 			climb_point = results["position"]
+			old_head_pos_relative = head.position
+			old_point = self.global_position
+			head.position -= (climb_point-old_point)
+			self.global_position = climb_point
 			var tween = create_tween().parallel()
-			tween.tween_property(self, "position", climb_point, 0.7).set_trans(Tween.TRANS_EXPO)
+#			tween.tween_callback(func(): self.global_position = climb_point)
+#			tween.tween_callback(func(): self.velocity = Vector3.ZERO)
+			tween.tween_property(head, "position", old_head_pos_relative, 0.6).set_trans(Tween.TRANS_EXPO)
 			tween.tween_callback(func(): is_climbing = false)
+			self.velocity = Vector3.ZERO
+			fresh_jump = 0.0
+			tween.tween_property(self, "fresh_jump", 1.0, 0.05)
 #			tween.tween_callback(func(): print("finished climb!"))
 	if Input.is_action_just_pressed("ui_accept"):
-		if first_jump and floorer > 0.001 and not (can_climb() and not is_climbing): #leniency ^^^
+		if first_jump and floorer > 0.001 and not (can_climb() and not is_climbing) and fresh_jump >= 0.95: #leniency ^^^
 			first_jump = false
 			velocity.y = JUMP_VELOCITY
 
-	
-		# Get the input direction and handle the movement/deceleration.
+
+	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	var direction = (head.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if is_on_floor():
-		if direction:
-			velocity.x = direction.x * speed
-			velocity.z = direction.z * speed
-		else:
-			velocity.x = 0
-			velocity.z = 0
-			velocity.x = lerp(velocity.x, direction.x * speed, 5.0 * delta)
-			velocity.z = lerp(velocity.z, direction.z * speed, 5.0 * delta)
+		if not is_climbing:
+			if direction:
+				velocity.x = direction.x * speed
+				velocity.z = direction.z * speed
+			else:
+				velocity.x = 0
+				velocity.z = 0
+				velocity.x = lerp(velocity.x, direction.x * speed, 5.0 * delta)
+				velocity.z = lerp(velocity.z, direction.z * speed, 5.0 * delta)
 	else:
 		velocity.x = lerp(velocity.x, direction.x * speed, 3.0 * delta)
 		velocity.z = lerp(velocity.z, direction.z * speed, 3.0 * delta)

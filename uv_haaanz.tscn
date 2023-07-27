@@ -1,13 +1,6 @@
-[gd_scene load_steps=18 format=3 uid="uid://csehh04pxxw3d"]
+[gd_scene load_steps=8 format=3 uid="uid://cvp0vbj5n3jjq"]
 
-[ext_resource type="Script" path="res://scripts/OurGuy.gd" id="1_ogahp"]
-[ext_resource type="PackedScene" uid="uid://c41xhih56iy40" path="res://interface.tscn" id="2_kxxvi"]
-[ext_resource type="Script" path="res://scripts/leftik.gd" id="3_14nfj"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_3aa12"]
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_6xhfx"]
-points = PackedVector3Array(-0.125207, -0.532801, -0.480507, 0.0227831, 0.47607, 0.498884, 0.169713, 0.559144, 0.464172, 0.231051, -0.803591, 0.320455, 0.40741, 0.651043, -0.243523, -0.482789, 0.594843, 0.0822132, -0.362868, -0.682312, 0.289697, 0.469044, -0.654529, -0.0662713, -0.127444, 0.842701, -0.338103, -0.393435, -0.683942, -0.244717, 0.438255, 0.623309, 0.200849, 0.0841477, 0.977454, 0.114795, -0.0682023, -0.976458, -0.12927, 0.20055, -0.563129, -0.451454, -0.185527, 0.595453, -0.453475, -0.273363, 0.592268, 0.407754, -0.00693649, -0.476823, 0.49966, 0.375821, -0.588614, 0.316955, 0.111579, 0.563059, -0.481177, -0.41725, 0.527866, -0.270497, -0.484546, -0.596972, -0.0665097, -0.279747, 0.908561, 0.0533361, -0.250197, -0.880712, 0.205319, 0.263647, -0.902771, -0.127394, 0.293368, 0.871526, -0.157196, 0.373412, -0.526319, -0.328246, 0.499663, 0.476641, -0.00688856, 0.0531056, 0.875001, 0.324703, -0.154543, -0.590854, 0.465879, -0.0972799, -0.782358, -0.398188, -0.387649, -0.498171, 0.31565, -0.30068, -0.587995, -0.388901)
+[ext_resource type="Script" path="res://scripts/leftik.gd" id="1_ifjnw"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_81fud"]
 
@@ -235,74 +228,12 @@ _data = {
 "walk": SubResource("Animation_o5va7")
 }
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nvnf0"]
-animation = &"RESET"
+[node name="uv_HAAANZ" type="Node3D"]
+transform = Transform3D(-1, 0, 9.68575e-08, 0, 1, 0, -9.68575e-08, 0, -1, 0, 0, 0)
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_v27qv"]
-animation = &"walk"
+[node name="Armature" type="Node3D" parent="."]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_1ej3p"]
-advance_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5w0au"]
-xfade_time = 0.2
-advance_mode = 2
-advance_condition = &"walk"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_xoe35"]
-xfade_time = 0.2
-advance_mode = 2
-advance_condition = &"reset"
-
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_3rs6g"]
-states/RESET/node = SubResource("AnimationNodeAnimation_nvnf0")
-states/RESET/position = Vector2(362, 100)
-states/Start/position = Vector2(185, 100)
-states/walk/node = SubResource("AnimationNodeAnimation_v27qv")
-states/walk/position = Vector2(362, 13)
-transitions = ["Start", "RESET", SubResource("AnimationNodeStateMachineTransition_1ej3p"), "RESET", "walk", SubResource("AnimationNodeStateMachineTransition_5w0au"), "walk", "RESET", SubResource("AnimationNodeStateMachineTransition_xoe35")]
-graph_offset = Vector2(-35, -36)
-
-[node name="Player" type="CharacterBody3D"]
-collision_layer = 2
-collision_mask = 2
-wall_min_slide_angle = 0.785398
-floor_constant_speed = true
-floor_max_angle = 0.959931
-script = ExtResource("1_ogahp")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-cast_shadow = 3
-mesh = SubResource("CapsuleMesh_3aa12")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("ConvexPolygonShape3D_6xhfx")
-
-[node name="Node3D" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.50967, 0)
-
-[node name="Camera3D" type="Camera3D" parent="Node3D"]
-current = true
-
-[node name="flashlight or something lol" type="SpotLight3D" parent="Node3D/Camera3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, -0.50967, -0.3)
-shadow_enabled = true
-distance_fade_enabled = true
-spot_range = 3.176
-spot_angle = 14.7069
-
-[node name="CanvasLayer" type="CanvasLayer" parent="Node3D"]
-
-[node name="interface" parent="Node3D/CanvasLayer" instance=ExtResource("2_kxxvi")]
-
-[node name="uv_HAAANZ" type="Node3D" parent="Node3D"]
-transform = Transform3D(-1, 0, 9.68575e-08, 0, 1, 0, -9.68575e-08, 0, -1, -9.68575e-09, -1.3, 0.1)
-
-[node name="Armature" type="Node3D" parent="Node3D/uv_HAAANZ"]
-
-[node name="Skeleton3D" type="Skeleton3D" parent="Node3D/uv_HAAANZ/Armature"]
+[node name="Skeleton3D" type="Skeleton3D" parent="Armature"]
 bones/0/name = "Main0"
 bones/0/parent = -1
 bones/0/rest = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.412821, 0)
@@ -633,94 +564,31 @@ bones/46/position = Vector3(-2.10839e-09, 0.0322228, 6.128e-10)
 bones/46/rotation = Quaternion(-2.38228e-16, -1.77636e-15, -9.50102e-17, 1)
 bones/46/scale = Vector3(1, 1, 1)
 
-[node name="Cube_001" type="MeshInstance3D" parent="Node3D/uv_HAAANZ/Armature/Skeleton3D"]
+[node name="Cube_001" type="MeshInstance3D" parent="Armature/Skeleton3D"]
 mesh = SubResource("ArrayMesh_p2ffs")
 skin = SubResource("Skin_s2xfc")
 
-[node name="left" type="SkeletonIK3D" parent="Node3D/uv_HAAANZ/Armature/Skeleton3D"]
-process_priority = 1
+[node name="left" type="SkeletonIK3D" parent="Armature/Skeleton3D"]
 root_bone = &"Bicep.L"
 tip_bone = &"Wrist.L"
 target_node = NodePath("../../leftmarker")
-script = ExtResource("3_14nfj")
+script = ExtResource("1_ifjnw")
 
-[node name="right" type="SkeletonIK3D" parent="Node3D/uv_HAAANZ/Armature/Skeleton3D"]
-process_priority = 1
+[node name="right" type="SkeletonIK3D" parent="Armature/Skeleton3D"]
 root_bone = &"Bicep.R"
 tip_bone = &"Wrist.R"
 target_node = NodePath("../../rightmarker")
-script = ExtResource("3_14nfj")
+script = ExtResource("1_ifjnw")
 
-[node name="leftmarker" type="Marker3D" parent="Node3D/uv_HAAANZ/Armature"]
-transform = Transform3D(-0.707107, -4.37114e-08, -0.707107, -0.707107, -4.37114e-08, 0.707107, -6.18172e-08, 1, -7.10543e-15, 0.484187, 0.695862, 0.543929)
-
-[node name="rightmarker" type="Marker3D" parent="Node3D/uv_HAAANZ/Armature"]
-transform = Transform3D(-0.707107, 5.31461e-08, 0.707107, 0.707107, 1.40569e-07, 0.707107, -6.18172e-08, 1, -1.36977e-07, -0.484, 0.696, 0.544)
-
-[node name="Headnode" type="Node3D" parent="."]
-
-[node name="ParallelRaycast1" type="RayCast3D" parent="Headnode"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 2, 0)
-target_position = Vector3(0, 0, -2)
-hit_from_inside = true
-
-[node name="ParallelRaycast2" type="RayCast3D" parent="Headnode"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-target_position = Vector3(0, 0, -2)
-hit_from_inside = true
-
-[node name="ParallelRaycast3" type="RayCast3D" parent="Headnode"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 2, 0)
-target_position = Vector3(0, 0, -2)
-hit_from_inside = true
-
-[node name="ParallelRaycast4" type="RayCast3D" parent="Headnode"]
-transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, -0.5, 2, 0)
-target_position = Vector3(0, 0, -2.828)
-hit_from_inside = true
-
-[node name="ParallelRaycast5" type="RayCast3D" parent="Headnode"]
-transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 2, 0)
-target_position = Vector3(0, 0, -2.828)
-hit_from_inside = true
-
-[node name="ParallelRaycast6" type="RayCast3D" parent="Headnode"]
-transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0.5, 2, 0)
-target_position = Vector3(0, 0, -2.828)
-hit_from_inside = true
-
-[node name="Frontnode2" type="Node3D" parent="."]
-
-[node name="FrontalRaycast" type="RayCast3D" parent="Frontnode2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9, 0)
-target_position = Vector3(0, 0, -1.2)
-debug_shape_custom_color = Color(1, 1, 1, 1)
-debug_shape_thickness = 3
-
-[node name="SpotLight3D3" type="SpotLight3D" parent="Frontnode2/FrontalRaycast"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.68575e-08, 0)
-light_energy = 4.071
-light_volumetric_fog_energy = 16.0
-spot_range = 1.2
-spot_angle = 1.0
-
-[node name="upcheck" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-
-[node name="RayCast3D" type="RayCast3D" parent="upcheck"]
-target_position = Vector3(0, 0.995, 0)
-hit_from_inside = true
-debug_shape_custom_color = Color(1, 0, 0, 1)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-root_node = NodePath("../Node3D/uv_HAAANZ/Armature")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Armature"]
 libraries = {
 "": SubResource("AnimationLibrary_coe3p")
 }
 
-[node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource("AnimationNodeStateMachine_3rs6g")
-anim_player = NodePath("../AnimationPlayer")
-active = true
-parameters/conditions/reset = false
-parameters/conditions/walk = false
+[node name="leftmarker" type="Marker3D" parent="Armature"]
+transform = Transform3D(-0.707107, -4.37114e-08, -0.707107, -0.707107, -4.37114e-08, 0.707107, -6.18172e-08, 1, -7.10543e-15, 0.484187, 0.695862, 0.543929)
+
+[node name="rightmarker" type="Marker3D" parent="Armature"]
+transform = Transform3D(-0.707107, 5.31461e-08, 0.707107, 0.707107, 1.40569e-07, 0.707107, -6.18172e-08, 1, -1.36977e-07, -0.484, 0.696, 0.544)
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="Armature"]

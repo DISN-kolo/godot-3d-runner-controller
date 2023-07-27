@@ -14,7 +14,7 @@ var fresh_jump = 1.0 #prevent climb-jumps
 
 #bob moment
 const BOB_FREQ = 2.0
-const BOB_AMP = 0.08
+const BOB_AMP = 0.02
 var t_bob = 0.0
 
 #fov
@@ -179,9 +179,13 @@ func _physics_process(delta):
 	if is_on_floor():
 		if not is_climbing:
 			if direction:
+				$AnimationTree.set("parameters/conditions/reset", false)
+				$AnimationTree.set("parameters/conditions/walk", true)
 				velocity.x = direction.x * speed
 				velocity.z = direction.z * speed
 			else:
+				$AnimationTree.set("parameters/conditions/walk", false)
+				$AnimationTree.set("parameters/conditions/reset", true)
 				velocity.x = 0
 				velocity.z = 0
 				velocity.x = lerp(velocity.x, direction.x * speed, 5.0 * delta)

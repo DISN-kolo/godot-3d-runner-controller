@@ -167,6 +167,33 @@ bind/46/name = &"Miz3.L"
 bind/46/bone = -1
 bind/46/pose = Transform3D(6.0657e-31, -1, 7.54979e-08, 1, 1.26217e-08, -5.58794e-08, -4.38952e-38, 7.23662e-08, 1, 1.0123, -1.13899, 0.0279264)
 
+[sub_resource type="Animation" id="Animation_68m6s"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("leftmarker:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.484187, 0.695862, 0.543929)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("rightmarker:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.484, 0.696, 0.544)]
+}
+
 [sub_resource type="Animation" id="Animation_o5va7"]
 resource_name = "walk"
 loop_mode = 1
@@ -193,33 +220,6 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector3(-0.484, 0.696, 0.344), Vector3(-0.484, 0.696, 0.544), Vector3(-0.484, 0.696, 0.344)]
-}
-
-[sub_resource type="Animation" id="Animation_68m6s"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("leftmarker:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0.484187, 0.695862, 0.543929)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("rightmarker:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(-0.484, 0.696, 0.544)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_coe3p"]

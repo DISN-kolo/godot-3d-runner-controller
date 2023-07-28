@@ -1,8 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://csehh04pxxw3d"]
+[gd_scene load_steps=25 format=3 uid="uid://csehh04pxxw3d"]
 
 [ext_resource type="Script" path="res://scripts/OurGuy.gd" id="1_ogahp"]
 [ext_resource type="PackedScene" uid="uid://c41xhih56iy40" path="res://interface.tscn" id="2_kxxvi"]
 [ext_resource type="Script" path="res://scripts/leftik.gd" id="3_14nfj"]
+[ext_resource type="Animation" uid="uid://sux0pwudilyw" path="res://animations/RESET.res" id="4_hlwaj"]
+[ext_resource type="Animation" uid="uid://dw3skws0tagj5" path="res://animations/walk.res" id="5_p7pi6"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_3aa12"]
 
@@ -174,75 +176,30 @@ bind/46/name = &"Miz3.L"
 bind/46/bone = -1
 bind/46/pose = Transform3D(6.0657e-31, -1, 7.54979e-08, 1, 1.26217e-08, -5.58794e-08, -4.38952e-38, 7.23662e-08, 1, 1.0123, -1.13899, 0.0279264)
 
-[sub_resource type="Animation" id="Animation_o5va7"]
-resource_name = "walk"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("leftmarker:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector3(0.484187, 0.695862, 0.543929), Vector3(0.484187, 0.695862, 0.343929), Vector3(0.484187, 0.695862, 0.543929)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("rightmarker:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector3(-0.484, 0.696, 0.344), Vector3(-0.484, 0.696, 0.544), Vector3(-0.484, 0.696, 0.344)]
-}
-
-[sub_resource type="Animation" id="Animation_68m6s"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("leftmarker:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0.484187, 0.695862, 0.543929)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("rightmarker:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(-0.484, 0.696, 0.544)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_coe3p"]
 _data = {
-"RESET": SubResource("Animation_68m6s"),
-"walk": SubResource("Animation_o5va7")
+"RESET": ExtResource("4_hlwaj"),
+"walk": ExtResource("5_p7pi6")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nvnf0"]
 animation = &"RESET"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_v27qv"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_odem4"]
 animation = &"walk"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_1ej3p"]
-advance_mode = 2
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_o0416"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_dvthj"]
+graph_offset = Vector2(-551.044, 53.8131)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_odem4")
+nodes/Animation/position = Vector2(-260, 140)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_o0416")
+nodes/TimeScale/position = Vector2(-80, 140)
+node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"Animation"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_v27qv"]
+animation = &"walk"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5w0au"]
 xfade_time = 0.2
@@ -254,14 +211,39 @@ xfade_time = 0.2
 advance_mode = 2
 advance_condition = &"reset"
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_1ej3p"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_riw5n"]
+xfade_time = 0.2
+advance_mode = 2
+advance_condition = &"slowwalk"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ygbr8"]
+xfade_time = 0.2
+advance_mode = 2
+advance_condition = &"reset"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_0oef4"]
+xfade_time = 0.1
+advance_mode = 2
+advance_condition = &"walk"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_n3n84"]
+xfade_time = 0.1
+advance_mode = 2
+advance_condition = &"slowwalk"
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_3rs6g"]
-states/RESET/node = SubResource("AnimationNodeAnimation_nvnf0")
-states/RESET/position = Vector2(362, 100)
 states/Start/position = Vector2(185, 100)
+states/idle_hands/node = SubResource("AnimationNodeAnimation_nvnf0")
+states/idle_hands/position = Vector2(362, 100)
+states/slowwalk/node = SubResource("AnimationNodeBlendTree_dvthj")
+states/slowwalk/position = Vector2(362, -68)
 states/walk/node = SubResource("AnimationNodeAnimation_v27qv")
-states/walk/position = Vector2(362, 13)
-transitions = ["Start", "RESET", SubResource("AnimationNodeStateMachineTransition_1ej3p"), "RESET", "walk", SubResource("AnimationNodeStateMachineTransition_5w0au"), "walk", "RESET", SubResource("AnimationNodeStateMachineTransition_xoe35")]
-graph_offset = Vector2(-35, -36)
+states/walk/position = Vector2(618, -68)
+transitions = ["idle_hands", "walk", SubResource("AnimationNodeStateMachineTransition_5w0au"), "walk", "idle_hands", SubResource("AnimationNodeStateMachineTransition_xoe35"), "Start", "idle_hands", SubResource("AnimationNodeStateMachineTransition_1ej3p"), "idle_hands", "slowwalk", SubResource("AnimationNodeStateMachineTransition_riw5n"), "slowwalk", "idle_hands", SubResource("AnimationNodeStateMachineTransition_ygbr8"), "slowwalk", "walk", SubResource("AnimationNodeStateMachineTransition_0oef4"), "walk", "slowwalk", SubResource("AnimationNodeStateMachineTransition_n3n84")]
+graph_offset = Vector2(-165, -127)
 
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 2
@@ -714,6 +696,7 @@ debug_shape_custom_color = Color(1, 0, 0, 1)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Node3D/uv_HAAANZ/Armature")
+speed_scale = 15.99
 libraries = {
 "": SubResource("AnimationLibrary_coe3p")
 }
@@ -723,4 +706,6 @@ tree_root = SubResource("AnimationNodeStateMachine_3rs6g")
 anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/conditions/reset = false
+parameters/conditions/slowwalk = false
 parameters/conditions/walk = false
+parameters/slowwalk/TimeScale/scale = 0.5

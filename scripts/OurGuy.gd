@@ -12,10 +12,10 @@ var floorer = 1.0
 var first_jump = true
 var fresh_jump = 1.0 #prevent climb-jumps
 
-#bob moment
-const BOB_FREQ = 2.0
-const BOB_AMP = 0.02
-var t_bob = 0.0
+##bob moment
+#const BOB_FREQ = 2.0
+#const BOB_AMP = 0.02
+#var t_bob = 0.0
 
 #fov
 const FOV_BASE = 90
@@ -179,13 +179,13 @@ func _physics_process(delta):
 	if is_on_floor():
 		if not is_climbing:
 			if direction:
-				$AnimationTree.set("parameters/conditions/reset", false)
-				$AnimationTree.set("parameters/conditions/walk", true)
+#				$AnimationTree.set("parameters/conditions/reset", false)
+#				$AnimationTree.set("parameters/conditions/walk", true)
 				velocity.x = direction.x * speed
 				velocity.z = direction.z * speed
 			else:
-				$AnimationTree.set("parameters/conditions/walk", false)
-				$AnimationTree.set("parameters/conditions/reset", true)
+#				$AnimationTree.set("parameters/conditions/walk", false)
+#				$AnimationTree.set("parameters/conditions/reset", true)
 				velocity.x = 0
 				velocity.z = 0
 				velocity.x = lerp(velocity.x, direction.x * speed, 5.0 * delta)
@@ -196,6 +196,10 @@ func _physics_process(delta):
 #	if Input.is_action_pressed("zoom"):
 #		velocity /= 2.
 #   this needs better implementation as it just slows everything down lol
+#	$AnimationPlayer.speed_scale = 1 - float(is_crouching)/1.2
+	$AnimationTree.set("parameters/conditions/slowwalk", is_on_floor() and not is_climbing and direction and is_crouching)
+	$AnimationTree.set("parameters/conditions/walk", is_on_floor() and not is_climbing and direction and not is_crouching)
+	$AnimationTree.set("parameters/conditions/reset", not(is_on_floor() and not is_climbing and direction))
 	move_and_slide()
 	
 	# camera fov
@@ -206,20 +210,20 @@ func _physics_process(delta):
 	camera.fov = lerp(camera.fov, fov_target, 20.0 * delta)
 #	if Input.is_action_just_released("zoom"):
 #		camera.fov = lerp
-	# camera bob
-	if Vector2(velocity.x, velocity.z).length() < 0.001 or not(is_on_floor()):
-		camera.transform.origin = lerp(camera.transform.origin, Vector3.ZERO, 4.0 * delta)
-		t_bob = 4.5/BOB_FREQ*PI
-	else:
-		t_bob += delta * velocity.length() * float(is_on_floor())
-		camera.transform.origin = _headbob(t_bob)
+#	# camera bob
+#	if Vector2(velocity.x, velocity.z).length() < 0.001 or not(is_on_floor()):
+#		camera.transform.origin = lerp(camera.transform.origin, Vector3.ZERO, 4.0 * delta)
+#		t_bob = 4.5/BOB_FREQ*PI
+#	else:
+#		t_bob += delta * velocity.length() * float(is_on_floor())
+#		camera.transform.origin = _headbob(t_bob)
 
 
-func _headbob(time) -> Vector3:
-	var pos = Vector3.ZERO
-	pos.y = sin(time * BOB_FREQ) * BOB_AMP - BOB_AMP
-	pos.x = cos(time * BOB_FREQ/3) * BOB_AMP
-	return pos
+#func _headbob(time) -> Vector3:
+#	var pos = Vector3.ZERO
+#	pos.y = sin(time * BOB_FREQ) * BOB_AMP - BOB_AMP
+#	pos.x = cos(time * BOB_FREQ/3) * BOB_AMP
+#	return pos
 
 func can_climb():
 	var can_climb_var = false

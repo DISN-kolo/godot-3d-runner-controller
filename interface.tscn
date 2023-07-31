@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://c41xhih56iy40"]
 
 [ext_resource type="Script" path="res://scripts/superface.gd" id="1_2jvvk"]
-[ext_resource type="Texture2D" uid="uid://cxq575dt2ivn6" path="res://icon.svg" id="1_gs2rb"]
+[ext_resource type="Texture2D" uid="uid://bffqu3lv2ish8" path="res://misc/spacetoclimb.png" id="2_dvq55"]
 
 [node name="interface" type="Control"]
 layout_mode = 3
@@ -13,13 +13,12 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_2jvvk")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(71, 77)
-texture = ExtResource("1_gs2rb")
-
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
+[node name="Label" type="Label" parent="."]
 layout_mode = 0
-offset_left = 20.0
-offset_top = 156.0
-offset_right = 60.0
-offset_bottom = 196.0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(172.5, 515.5)
+scale = Vector2(3.5, 3.5)
+texture = ExtResource("2_dvq55")

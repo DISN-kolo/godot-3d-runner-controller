@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://csehh04pxxw3d"]
+[gd_scene load_steps=21 format=3 uid="uid://csehh04pxxw3d"]
 
 [ext_resource type="Script" path="res://scripts/OurGuy.gd" id="1_ogahp"]
 [ext_resource type="PackedScene" uid="uid://c41xhih56iy40" path="res://interface.tscn" id="2_kxxvi"]
@@ -176,6 +176,13 @@ bind/46/name = &"Miz3.L"
 bind/46/bone = -1
 bind/46/pose = Transform3D(6.0657e-31, -1, 7.54979e-08, 1, 1.26217e-08, -5.58794e-08, -4.38952e-38, 7.23662e-08, 1, 1.0123, -1.13899, 0.0279264)
 
+[sub_resource type="Curve3D" id="Curve3D_45ovb"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1.2),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_coe3p"]
 _data = {
 "RESET": ExtResource("4_hlwaj"),
@@ -218,7 +225,7 @@ states/idle_hands/position = Vector2(362, 100)
 states/walk/node = SubResource("AnimationNodeBlendTree_dvthj")
 states/walk/position = Vector2(362, -68)
 transitions = ["Start", "idle_hands", SubResource("AnimationNodeStateMachineTransition_1ej3p"), "idle_hands", "walk", SubResource("AnimationNodeStateMachineTransition_riw5n"), "walk", "idle_hands", SubResource("AnimationNodeStateMachineTransition_ygbr8")]
-graph_offset = Vector2(-165, -127)
+graph_offset = Vector2(64, -113)
 
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 2
@@ -230,7 +237,9 @@ script = ExtResource("1_ogahp")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-cast_shadow = 3
+visible = false
+layers = 0
+cast_shadow = 0
 mesh = SubResource("CapsuleMesh_3aa12")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -255,9 +264,10 @@ spot_angle = 14.7069
 [node name="interface" parent="Node3D/CanvasLayer" instance=ExtResource("2_kxxvi")]
 
 [node name="uv_HAAANZ" type="Node3D" parent="Node3D"]
-transform = Transform3D(-1, 0, 9.68575e-08, 0, 1, 0, -9.68575e-08, 0, -1, -9.68575e-09, -1.3, 0.1)
+transform = Transform3D(-1, 0, 9.68575e-08, 0, 1, 0, -9.68575e-08, 0, -1, -9.68575e-09, -0.0496323, 0.1)
 
 [node name="Armature" type="Node3D" parent="Node3D/uv_HAAANZ"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.66533e-16, -1.2167, 0.0936568)
 
 [node name="Skeleton3D" type="Skeleton3D" parent="Node3D/uv_HAAANZ/Armature"]
 bones/0/name = "Main0"
@@ -591,6 +601,7 @@ bones/46/rotation = Quaternion(-2.38228e-16, -1.77636e-15, -9.50102e-17, 1)
 bones/46/scale = Vector3(1, 1, 1)
 
 [node name="Cube_001" type="MeshInstance3D" parent="Node3D/uv_HAAANZ/Armature/Skeleton3D"]
+cast_shadow = 0
 mesh = SubResource("ArrayMesh_p2ffs")
 skin = SubResource("Skin_s2xfc")
 
@@ -648,10 +659,28 @@ hit_from_inside = true
 
 [node name="Frontnode2" type="Node3D" parent="."]
 
+[node name="Path3D" type="Path3D" parent="Frontnode2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9, 0)
+visible = false
+curve = SubResource("Curve3D_45ovb")
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="Frontnode2/Path3D"]
+polygon = PackedVector2Array(-0.01, -0.01, -0.01, 0.01, 0.01, 0.01, 0.01, -0.01)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+
 [node name="FrontalRaycast" type="RayCast3D" parent="Frontnode2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9, 0)
 target_position = Vector3(0, 0, -1.2)
-debug_shape_custom_color = Color(1, 1, 1, 1)
+debug_shape_custom_color = Color(1, 1, 1, 0)
 debug_shape_thickness = 3
 
 [node name="SpotLight3D3" type="SpotLight3D" parent="Frontnode2/FrontalRaycast"]

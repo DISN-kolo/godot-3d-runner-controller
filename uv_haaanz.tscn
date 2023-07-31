@@ -569,12 +569,14 @@ mesh = SubResource("ArrayMesh_p2ffs")
 skin = SubResource("Skin_s2xfc")
 
 [node name="left" type="SkeletonIK3D" parent="Armature/Skeleton3D"]
+process_priority = 1
 root_bone = &"Bicep.L"
 tip_bone = &"Wrist.L"
 target_node = NodePath("../../leftmarker")
 script = ExtResource("1_ifjnw")
 
 [node name="right" type="SkeletonIK3D" parent="Armature/Skeleton3D"]
+process_priority = 1
 root_bone = &"Bicep.R"
 tip_bone = &"Wrist.R"
 target_node = NodePath("../../rightmarker")

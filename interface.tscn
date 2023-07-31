@@ -1,5 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://c41xhih56iy40"]
+[gd_scene load_steps=3 format=3 uid="uid://c41xhih56iy40"]
 
+[ext_resource type="Script" path="res://scripts/superface.gd" id="1_2jvvk"]
 [ext_resource type="Texture2D" uid="uid://cxq575dt2ivn6" path="res://icon.svg" id="1_gs2rb"]
 
 [node name="interface" type="Control"]
@@ -10,7 +11,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+script = ExtResource("1_2jvvk")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(71, 77)
 texture = ExtResource("1_gs2rb")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 156.0
+offset_right = 60.0
+offset_bottom = 196.0

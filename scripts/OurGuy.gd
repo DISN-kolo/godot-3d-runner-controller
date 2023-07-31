@@ -100,6 +100,10 @@ func _physics_process(delta):
 				head.position.y = 1.51
 				upper_raycasts.position.y = 0.0
 				frontnode.scale.y = 1.0
+	if Input.is_action_just_pressed("zoom"):
+		movement_multiplier /= 1.5
+	if Input.is_action_just_released("zoom"):
+		movement_multiplier *= 1.5
 	# Add the gravity.
 	if not is_on_floor():
 #		if not can_climb():
@@ -128,12 +132,6 @@ func _physics_process(delta):
 			for i in range(19, 0, -1):
 				one_frontal_raycast.position.y = i/10.0
 				one_frontal_raycast.force_raycast_update()
-#				print(one_frontal_raycast.position)
-#				print(one_frontal_raycast.rotation_degrees)
-#				print(one_frontal_raycast.get_collision_point() +
-#					Vector3(0, 1.1, -0.15).rotated(Vector3.UP, one_frontal_raycast.rotation.y),
-#					one_frontal_raycast.get_collision_point() +
-#					Vector3(0, -0.1, -0.15).rotated(Vector3.UP, one_frontal_raycast.rotation.y))
 				if one_frontal_raycast.is_colliding():
 					results = space.intersect_ray(
 						PhysicsRayQueryParameters3D.create(
@@ -143,9 +141,7 @@ func _physics_process(delta):
 							Vector3(0, -0.1, -0.15).rotated(Vector3.UP, one_frontal_raycast.rotation.y)
 						)
 					)
-#					print(results)
 					break
-				
 			if results.is_empty():
 				is_climbing = false
 				if first_jump and floorer > 0.001: #leniency = = = 
@@ -193,13 +189,12 @@ func _physics_process(delta):
 	else:
 		velocity.x = lerp(velocity.x, direction.x * speed, 3.0 * delta)
 		velocity.z = lerp(velocity.z, direction.z * speed, 3.0 * delta)
-#	if Input.is_action_pressed("zoom"):
-#		velocity /= 2.
-#   this needs better implementation as it just slows everything down lol
 #	$AnimationPlayer.speed_scale = 1 - float(is_crouching)/1.2
-	$AnimationTree.set("parameters/conditions/slowwalk", is_on_floor() and not is_climbing and direction and is_crouching)
-	$AnimationTree.set("parameters/conditions/walk", is_on_floor() and not is_climbing and direction and not is_crouching)
+	$AnimationTree.set("parameters/conditions/walk", is_on_floor() and not is_climbing and direction)
+#	$AnimationTree.set("parameters/conditions/walk", is_on_floor() and not is_climbing and direction and not is_crouching)
 	$AnimationTree.set("parameters/conditions/reset", not(is_on_floor() and not is_climbing and direction))
+#	print($AnimationTree.get_tree_root().get_node("slowwalk").get_node("TimeScale").set_scale(20))
+	$AnimationTree.set("parameters/walk/TimeScale/scale", (speed/WALK_SPEED)/2)
 	move_and_slide()
 	
 	# camera fov
@@ -208,22 +203,6 @@ func _physics_process(delta):
 	if Input.is_action_pressed("zoom"): #zoomy zooms
 		fov_target = FOV_ZOOM
 	camera.fov = lerp(camera.fov, fov_target, 20.0 * delta)
-#	if Input.is_action_just_released("zoom"):
-#		camera.fov = lerp
-#	# camera bob
-#	if Vector2(velocity.x, velocity.z).length() < 0.001 or not(is_on_floor()):
-#		camera.transform.origin = lerp(camera.transform.origin, Vector3.ZERO, 4.0 * delta)
-#		t_bob = 4.5/BOB_FREQ*PI
-#	else:
-#		t_bob += delta * velocity.length() * float(is_on_floor())
-#		camera.transform.origin = _headbob(t_bob)
-
-
-#func _headbob(time) -> Vector3:
-#	var pos = Vector3.ZERO
-#	pos.y = sin(time * BOB_FREQ) * BOB_AMP - BOB_AMP
-#	pos.x = cos(time * BOB_FREQ/3) * BOB_AMP
-#	return pos
 
 func can_climb():
 	var can_climb_var = false
@@ -236,5 +215,4 @@ func can_climb():
 		oneraycast.force_raycast_update()
 		if oneraycast.is_colliding():
 			can_climb_var = false
-#	print("can climb")
 	return can_climb_var

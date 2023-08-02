@@ -130,11 +130,13 @@ func _physics_process(delta):
 			is_climbing = true 
 			var colpoint : Vector3
 			var results : Dictionary
-			for i in range(190, 0, -1):
+			for i in range(190, 100, -1):
 				one_frontal_raycast.position.y = i/100.0
 				one_frontal_raycast.force_raycast_update()
 				if one_frontal_raycast.is_colliding():
 					frontal_collision_normal = one_frontal_raycast.get_collision_normal()
+					if frontal_collision_normal.angle_to(Vector3.UP) < PI/2-0.2:
+						continue
 					results = space.intersect_ray(
 						PhysicsRayQueryParameters3D.create(
 							one_frontal_raycast.get_collision_point() +
@@ -211,7 +213,7 @@ func _physics_process(delta):
 
 func can_climb():
 	var can_climb_var = false
-	for i in range(190, 0, -1):
+	for i in range(190, 100, -1):
 		one_frontal_raycast.position.y = i/100.0
 		one_frontal_raycast.force_raycast_update()
 		if one_frontal_raycast.get_collision_normal().angle_to(Vector3.UP) < PI/2-0.2:

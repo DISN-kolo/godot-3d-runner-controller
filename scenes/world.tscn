@@ -1,27 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dwrewdb6s3leg"]
+[gd_scene load_steps=5 format=3 uid="uid://dwrewdb6s3leg"]
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_srwds"]
-[ext_resource type="PackedScene" uid="uid://csehh04pxxw3d" path="res://player.tscn" id="2_q55gr"]
+[ext_resource type="Environment" uid="uid://bpjhhgu08jqh3" path="res://scenes/world_env.tres" id="2_mird7"]
+[ext_resource type="PackedScene" uid="uid://csehh04pxxw3d" path="res://misc/player.tscn" id="2_q55gr"]
 [ext_resource type="PackedScene" uid="uid://nvy58wy0yyen" path="res://levels/level_0_runner_test.tscn" id="4_l1ni5"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ie388"]
-sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-
-[sub_resource type="Sky" id="Sky_ewmib"]
-sky_material = SubResource("ProceduralSkyMaterial_ie388")
-
-[sub_resource type="Environment" id="Environment_cro1d"]
-background_mode = 2
-sky = SubResource("Sky_ewmib")
-ambient_light_source = 3
-ssil_intensity = 3.02
-sdfgi_use_occlusion = true
-sdfgi_cascades = 8
-sdfgi_max_distance = 3276.8
-fog_height_density = -0.3368
-volumetric_fog_anisotropy = 0.62
-volumetric_fog_detail_spread = 6.0
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_srwds")
@@ -32,7 +14,7 @@ light_color = Color(0.74902, 0.74902, 0.74902, 1)
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_cro1d")
+environment = ExtResource("2_mird7")
 
 [node name="Player" parent="." instance=ExtResource("2_q55gr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)

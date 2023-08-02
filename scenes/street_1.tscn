@@ -1,0 +1,185 @@
+[gd_scene load_steps=10 format=3 uid="uid://h0k7wyvbyau"]
+
+[ext_resource type="PackedScene" uid="uid://bf55di71ab3rt" path="res://scenes/quick_building_occupied.tscn" id="1_cnntc"]
+[ext_resource type="Script" path="res://scripts/street_1.gd" id="1_q7bed"]
+[ext_resource type="Environment" uid="uid://bpjhhgu08jqh3" path="res://scenes/world_env.tres" id="3_e35pl"]
+
+[sub_resource type="Gradient" id="Gradient_to4vg"]
+offsets = PackedFloat32Array(0.628319, 0.823009)
+colors = PackedColorArray(0.489622, 0.489622, 0.489622, 1, 0, 0, 0, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_8aebf"]
+frequency = 0.1568
+fractal_octaves = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_dund7"]
+height = 200
+seamless = true
+seamless_blend_skirt = 0.287
+color_ramp = SubResource("Gradient_to4vg")
+noise = SubResource("FastNoiseLite_8aebf")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r7cti"]
+albedo_texture = SubResource("NoiseTexture2D_dund7")
+
+[sub_resource type="Curve3D" id="Curve3D_woyt3"]
+bake_interval = 74.15
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2.725, -0.035, 0, 0, 0, 0, 0, 0, -2.55178, 3.55752, 0.0624065),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="Curve3D" id="Curve3D_u1iq3"]
+bake_interval = 74.15
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0.960525, 0.960899, 1.44476, 0, 0, 0, 0, 0, 0, 0.993839, 1.35347, 0.338814, 0, 0, 0, 0, 0, 0, -4.27665, 4.73984, 2.54595),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[node name="street1" type="Node3D"]
+script = ExtResource("1_q7bed")
+
+[node name="road" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.836996, -0.3, -17.1937)
+use_collision = true
+collision_layer = 3
+collision_mask = 3
+size = Vector3(41.2123, 1, 102.281)
+material = SubResource("StandardMaterial3D_r7cti")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("3_e35pl")
+
+[node name="buildings" type="Node3D" parent="."]
+
+[node name="quick building occupied" parent="buildings" instance=ExtResource("1_cnntc")]
+transform = Transform3D(0.24, 0, 0, 0, 0.24, 0, 0, 0, 0.24, -3.1464, -0.0534434, -13.5775)
+
+[node name="quick building occupied2" parent="buildings" instance=ExtResource("1_cnntc")]
+transform = Transform3D(0.211096, 0, -0.0330725, 0, 0.24, 0, 0.0254183, 0, 0.274663, -2.89024, -0.0800741, -18.6946)
+
+[node name="quick building occupied3" parent="buildings" instance=ExtResource("1_cnntc")]
+transform = Transform3D(0.246037, 0, 0.0052649, 0, 0.24, 0, -0.00553181, 0, 0.234166, -2.63691, -0.0774434, -23.1812)
+
+[node name="quick building occupied4" parent="buildings" instance=ExtResource("1_cnntc")]
+transform = Transform3D(-0.24, 0, -3.6239e-08, 0, 0.24, 0, 3.6239e-08, 0, -0.24, 8.64403, -0.0534434, -23.3914)
+
+[node name="quick building occupied5" parent="buildings" instance=ExtResource("1_cnntc")]
+transform = Transform3D(-0.211096, 0, 0.0330725, 0, 0.24, 0, -0.0254183, 0, -0.274663, 8.38788, -0.0800741, -18.2743)
+
+[node name="quick building occupied6" parent="buildings" instance=ExtResource("1_cnntc")]
+transform = Transform3D(-0.246037, 0, -0.00526492, 0, 0.24, 0, 0.00553183, 0, -0.234166, 8.13455, -0.0774434, -13.7877)
+
+[node name="quick building occupied7" parent="buildings" instance=ExtResource("1_cnntc")]
+transform = Transform3D(0.189909, 0, -0.146747, 0, 0.24, 0, 0.146747, 0, 0.189909, -10.9505, -0.0534434, -0.840476)
+
+[node name="quick building occupied8" parent="buildings" instance=ExtResource("1_cnntc")]
+transform = Transform3D(0.151496, 0, -0.194111, 0, 0.24, 0, 0.149187, 0, 0.197115, -7.61894, -0.0800741, -4.73297)
+
+[node name="quick building occupied9" parent="buildings" instance=ExtResource("1_cnntc")]
+transform = Transform3D(0.198069, 0, -0.139013, 0, 0.24, 0, 0.146061, 0, 0.188512, -4.67518, -0.0774434, -8.12825)
+
+[node name="quick building occupied10" parent="buildings" instance=ExtResource("1_cnntc")]
+transform = Transform3D(-0.238052, 0, -0.0305205, 0, 0.24, 0, 0.0305205, 0, -0.238051, 8.56935, -0.0534434, -9.20125)
+
+[node name="quick building occupied11" parent="buildings" instance=ExtResource("1_cnntc")]
+transform = Transform3D(-0.212615, 0, -0.00212447, 0, 0.24, 0, 0.00163279, 0, -0.276639, 8.96602, -0.0800741, -4.0931)
+
+[node name="quick building occupied12" parent="buildings" instance=ExtResource("1_cnntc")]
+transform = Transform3D(-0.243336, 0, -0.0350007, 0, 0.24, 0, 0.0367751, 0, -0.231595, 9.2853, -0.0774434, 0.38928)
+
+[node name="quick building occupied15" parent="buildings" instance=ExtResource("1_cnntc")]
+transform = Transform3D(-0.244234, 0, 0.0287883, 0, 0.24, 0, -0.0302477, 0, -0.232449, 11.1739, -0.0774434, 5.19996)
+
+[node name="quick building occupied16" parent="buildings" instance=ExtResource("1_cnntc")]
+transform = Transform3D(-0.23996, 0, 0.00436445, 0, 0.24, 0, -0.00436444, 0, -0.23996, 10.9382, -0.0534434, 9.80093)
+
+[node name="quick building occupied17" parent="buildings" instance=ExtResource("1_cnntc")]
+transform = Transform3D(-0.210599, 0, 0.0380618, 0, 0.24, 0, -0.029253, 0, -0.274016, 10.589, -0.0800741, 14.9125)
+
+[node name="quick building occupied18" parent="buildings" instance=ExtResource("1_cnntc")]
+transform = Transform3D(-0.246097, 0, -0.00100568, 0, 0.24, 0, 0.00105665, 0, -0.234223, 10.2541, -0.0774434, 19.3938)
+
+[node name="quick building occupied23" parent="buildings" instance=ExtResource("1_cnntc")]
+transform = Transform3D(-0.197011, 0, -0.104045, 0, 0.24, 0, 0.0799656, 0, -0.256336, 11.9463, -0.117567, 24.829)
+
+[node name="quick building occupied24" parent="buildings" instance=ExtResource("1_cnntc")]
+transform = Transform3D(-0.212598, 0, -0.117982, 0, 0.24, 0, 0.123964, 0, -0.20234, 13.8969, -0.0774434, 28.8773)
+
+[node name="quick building occupied19" parent="buildings" instance=ExtResource("1_cnntc")]
+transform = Transform3D(0.244234, 0, -0.0287883, 0, 0.24, 0, 0.0302477, 0, 0.232449, 0.90374, -0.0774434, 29.4537)
+
+[node name="quick building occupied20" parent="buildings" instance=ExtResource("1_cnntc")]
+transform = Transform3D(0.23996, 0, -0.00436443, 0, 0.24, 0, 0.00436442, 0, 0.23996, 1.13942, -0.0534434, 24.8527)
+
+[node name="quick building occupied21" parent="buildings" instance=ExtResource("1_cnntc")]
+transform = Transform3D(0.210599, 0, -0.0380618, 0, 0.24, 0, 0.029253, 0, 0.274016, 1.48859, -0.0800741, 19.7411)
+
+[node name="quick building occupied22" parent="buildings" instance=ExtResource("1_cnntc")]
+transform = Transform3D(0.246097, 0, 0.0010057, 0, 0.24, 0, -0.00105667, 0, 0.234223, 1.82347, -0.0774434, 15.2598)
+
+[node name="quick building occupied13" parent="buildings" instance=ExtResource("1_cnntc")]
+transform = Transform3D(0.027458, 0, 0.232763, 0, 0.24, 0, -0.244563, 0, 0.0261332, -1.7147, -0.0774434, 6.38928)
+
+[node name="quick building occupied25" parent="buildings" instance=ExtResource("1_cnntc")]
+transform = Transform3D(0.0502759, 0, 0.229285, 0, 0.24, 0, -0.240909, 0, 0.0478501, -6.71396, -0.0774434, 8.18928)
+
+[node name="quick building occupied26" parent="buildings" instance=ExtResource("1_cnntc")]
+transform = Transform3D(-0.147292, 0, -0.187642, 0, 0.24, 0, 0.197155, 0, -0.140185, -11.8857, -0.0774444, 7.18791)
+
+[node name="quick building occupied27" parent="buildings" instance=ExtResource("1_cnntc")]
+transform = Transform3D(-0.246093, 0, 0.00168014, 0, 0.24, 0, -0.00176532, 0, -0.234219, -14.3642, 0.0225499, 2.51838)
+
+[node name="quick building occupied14" parent="buildings" instance=ExtResource("1_cnntc")]
+transform = Transform3D(0.225527, 0, 0.0937494, 0, 0.24, 0, -0.0985021, 0, 0.214645, 1.2853, 0.00537554, 10.0893)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.940169, -0.203778, 0.27305, 1.49012e-08, 0.801421, 0.598101, -0.340708, 0.562316, -0.753471, 0, 0, 0)
+light_color = Color(1, 0.886275, 0.690196, 1)
+shadow_enabled = true
+
+[node name="pipes and shit" type="Node3D" parent="."]
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="pipes and shit"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.85111, 0)
+use_collision = true
+collision_layer = 3
+collision_mask = 3
+polygon = PackedVector2Array(0, 0, 0, 0.6, 0.6, 0.6, 0.6, 0)
+mode = 2
+path_node = NodePath("../Path3D")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+
+[node name="CSGPolygon3D2" type="CSGPolygon3D" parent="pipes and shit"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.85111, 0)
+use_collision = true
+collision_layer = 3
+collision_mask = 3
+polygon = PackedVector2Array(0, 0, 0, 0.6, 0.6, 0.6, 0.6, 0)
+mode = 2
+path_node = NodePath("../Path3D2")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+
+[node name="Path3D" type="Path3D" parent="pipes and shit"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.41879, 9.53674e-07, 6.73694)
+curve = SubResource("Curve3D_woyt3")
+
+[node name="Path3D2" type="Path3D" parent="pipes and shit"]
+transform = Transform3D(0.898557, 0, -0.438857, 0, 1, 0, 0.438857, 0, 0.898557, 0.584374, 2.51042, 3.13203)
+curve = SubResource("Curve3D_u1iq3")

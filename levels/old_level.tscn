@@ -1,10 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://bvepsjwokm8fp"]
+[gd_scene load_steps=7 format=3 uid="uid://bvepsjwokm8fp"]
 
+[ext_resource type="Script" path="res://scripts/world.gd" id="1_qxdci"]
 [ext_resource type="PackedScene" uid="uid://fyaqa0t3dt76" path="res://scenes/sloper_gamer_level_1.tscn" id="1_tyvow"]
 [ext_resource type="PackedScene" uid="uid://bllli5dshgdg4" path="res://scenes/testcollclimb.tscn" id="2_0lo16"]
 [ext_resource type="PackedScene" uid="uid://dxugoxmkhsuxv" path="res://scenes/level_csg.tscn" id="3_mwxqg"]
+[ext_resource type="PackedScene" uid="uid://csehh04pxxw3d" path="res://misc/player.tscn" id="4_hq8t6"]
+[ext_resource type="Environment" uid="uid://bpjhhgu08jqh3" path="res://scenes/world_env.tres" id="6_8k58a"]
 
 [node name="Node3D" type="Node3D"]
+script = ExtResource("1_qxdci")
 
 [node name="sloperGamerLevel1" parent="." instance=ExtResource("1_tyvow")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -100.4, 0)
@@ -12,3 +16,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -100.4, 0)
 [node name="testcollclimb" parent="." instance=ExtResource("2_0lo16")]
 
 [node name="LevelCSG" parent="." instance=ExtResource("3_mwxqg")]
+
+[node name="Player" parent="." instance=ExtResource("4_hq8t6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("6_8k58a")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.11804, -0.737288, 0.665186, 0, 0.66987, 0.742479, -0.993009, -0.0876422, 0.0790714, 0, 0, 0)

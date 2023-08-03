@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://boaufcic3k1wp"]
+
+[ext_resource type="Shader" path="res://levels/level_0_runner_test_2.gdshader" id="1_fxh4r"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_fxh4r")

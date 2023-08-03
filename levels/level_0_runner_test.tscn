@@ -1,5 +1,6 @@
-[gd_scene load_steps=32 format=3 uid="uid://nvy58wy0yyen"]
+[gd_scene load_steps=33 format=3 uid="uid://nvy58wy0yyen"]
 
+[ext_resource type="Material" uid="uid://boaufcic3k1wp" path="res://misc/level_0_runner_test_material.tres" id="1_73d7v"]
 [ext_resource type="Script" path="res://levels/level_0_cylscript.gd" id="1_rk8ed"]
 [ext_resource type="Script" path="res://levels/level_0_cylscript-2.gd" id="2_kiu1a"]
 
@@ -292,6 +293,7 @@ shape = SubResource("ConcavePolygonShape3D_ly52c")
 transform = Transform3D(9.5, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -11.7915)
 mesh = SubResource("ArrayMesh_vnuoi")
 skeleton = NodePath("")
+surface_material_override/0 = ExtResource("1_73d7v")
 
 [node name="Cube_001_col" type="StaticBody3D" parent="Cube_001"]
 collision_layer = 3
@@ -350,6 +352,7 @@ script = ExtResource("2_kiu1a")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatableBody3D2"]
 autoplay = "here_there"
+speed_scale = 0.0
 libraries = {
 "": SubResource("AnimationLibrary_0q515")
 }

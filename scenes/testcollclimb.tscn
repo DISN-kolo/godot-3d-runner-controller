@@ -86,6 +86,8 @@ mesh = SubResource("ArrayMesh_futut")
 skeleton = NodePath("")
 
 [node name="Cube_col" type="StaticBody3D" parent="Cube"]
+collision_layer = 3
+collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cube/Cube_col"]
 shape = SubResource("ConcavePolygonShape3D_vsdej")
@@ -96,6 +98,8 @@ mesh = SubResource("ArrayMesh_tic4t")
 skeleton = NodePath("")
 
 [node name="Cube001_col" type="StaticBody3D" parent="Cube001"]
+collision_layer = 3
+collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cube001/Cube001_col"]
 shape = SubResource("ConcavePolygonShape3D_hxwb0")
@@ -106,6 +110,8 @@ mesh = SubResource("ArrayMesh_tic4t")
 skeleton = NodePath("")
 
 [node name="Cube002_col" type="StaticBody3D" parent="Cube002"]
+collision_layer = 3
+collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cube002/Cube002_col"]
 shape = SubResource("ConcavePolygonShape3D_6xdee")
@@ -116,6 +122,8 @@ mesh = SubResource("ArrayMesh_tic4t")
 skeleton = NodePath("")
 
 [node name="Cube003_col" type="StaticBody3D" parent="Cube003"]
+collision_layer = 3
+collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cube003/Cube003_col"]
 shape = SubResource("ConcavePolygonShape3D_6tt4c")

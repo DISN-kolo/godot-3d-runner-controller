@@ -10,6 +10,9 @@ crouching [Ctrl], climbing [Space. See an icon appear in the top left corner to
 indicate the possibility to climb]. There's even zoom [Alt]! Also: head-bobbing, 
 speed-based FOV, HAAAAANDS with animation (note: I'm very much ***NOT*** an animator)
 
+Epic "movement tech" (wonky for now): try crouching while running (please remember to hold the 
+run button). Now, try jumping (please let go of the crouch button by that time. run is ok tho)
+
 The test level is a small obstacle course with moving and rotating platforms.
 
 ## what's under the hood

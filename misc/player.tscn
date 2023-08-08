@@ -692,6 +692,7 @@ parameters/conditions/walk = false
 parameters/walk/TimeScale/scale = 0.5
 
 [node name="AreaScan" type="Area3D" parent="."]
+visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AreaScan"]
 transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, 1.05, 0)

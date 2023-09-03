@@ -1,0 +1,14 @@
+[gd_resource type="StandardMaterial3D" load_steps=4 format=3 uid="uid://cbnobwbtp410a"]
+
+[ext_resource type="Texture2D" uid="uid://dcek2o2jdwh44" path="res://misc/textures/trunk1_base_color.png" id="1_8nvgw"]
+[ext_resource type="Texture2D" uid="uid://bdfc2niyep08q" path="res://misc/textures/trunk1_bump.png" id="2_gfaiv"]
+[ext_resource type="Texture2D" uid="uid://choabqjktnkjl" path="res://misc/textures/trunk1_roughness.png" id="3_fujee"]
+
+[resource]
+albedo_texture = ExtResource("1_8nvgw")
+roughness_texture = ExtResource("3_fujee")
+normal_enabled = true
+normal_scale = 6.55
+normal_texture = ExtResource("2_gfaiv")
+heightmap_scale = 1.0
+texture_filter = 0

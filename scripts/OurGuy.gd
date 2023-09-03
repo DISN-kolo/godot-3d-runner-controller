@@ -88,10 +88,10 @@ func _physics_process(delta):
 				slide_jump_allowed=false
 				tween_slide.tween_callback(func(): make_me_crouch(true))
 				tween_slide.tween_callback(func(): movement_multiplier=2.2)
-				tween_slide.tween_property(self, "movement_multiplier", 1.95, 0.2)
+#				tween_slide.tween_property(self, "movement_multiplier", 1.95, 0.2)
 				tween_slide.tween_callback(func(): slide_jump_allowed=true)
-				tween_slide.tween_property(self, "movement_multiplier", 1.8, 0.6)
-				tween_slide.tween_property(self, "movement_multiplier", 0.5, 0.2)
+				tween_slide.tween_property(self, "movement_multiplier", 1.83, 1.2)
+				tween_slide.tween_property(self, "movement_multiplier", 0.5, 0.1)
 				tween_slide.tween_callback(func(): is_crouching=true)
 				tween_slide.tween_callback(func(): is_sliding=false)
 				is_sprinting = false
@@ -281,6 +281,7 @@ func make_me_crouch(yes:bool):
 		hands.position = Vector3(0, -0.05, 0.1)
 
 func can_climb():
+#	return false
 	var can_climb_var = false
 	var results_checker
 	var colpoint_checker

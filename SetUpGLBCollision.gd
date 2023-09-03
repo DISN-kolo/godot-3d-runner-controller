@@ -10,4 +10,6 @@ func _run():
 			var childObject : MeshInstance3D = child
 #			childObject.add_child(body)
 #			body.set_owner(childObject.get_tree().get_edited_scene_root())
-			childObject.create_trimesh_collision()
+	
+#			childObject.create_trimesh_collision()
+			childObject.create_convex_collision()

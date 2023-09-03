@@ -1,8 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://h0k7wyvbyau"]
+[gd_scene load_steps=13 format=3 uid="uid://h0k7wyvbyau"]
 
 [ext_resource type="PackedScene" uid="uid://bf55di71ab3rt" path="res://scenes/quick_building_occupied.tscn" id="1_cnntc"]
 [ext_resource type="Script" path="res://scripts/street_1.gd" id="1_q7bed"]
 [ext_resource type="Environment" uid="uid://bpjhhgu08jqh3" path="res://scenes/world_env.tres" id="3_e35pl"]
+[ext_resource type="PackedScene" uid="uid://bo142hcq3tveq" path="res://misc/gametree_1_blobbed.tscn" id="4_5f64g"]
+[ext_resource type="PackedScene" uid="uid://vn8ayco644yj" path="res://misc/gametree_1.tscn" id="4_v4dcd"]
+[ext_resource type="PackedScene" uid="uid://u3e6pwqhbu5" path="res://misc/gametree_2.tscn" id="5_5av75"]
 
 [sub_resource type="Gradient" id="Gradient_to4vg"]
 offsets = PackedFloat32Array(0.628319, 0.823009)
@@ -140,9 +143,9 @@ transform = Transform3D(-0.940169, -0.203778, 0.27305, 1.49012e-08, 0.801421, 0.
 light_color = Color(1, 0.886275, 0.690196, 1)
 shadow_enabled = true
 
-[node name="pipes and shit" type="Node3D" parent="."]
+[node name="pipes and stuff" type="Node3D" parent="."]
 
-[node name="CSGPolygon3D" type="CSGPolygon3D" parent="pipes and shit"]
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="pipes and stuff"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.85111, 0)
 use_collision = true
 collision_layer = 3
@@ -159,7 +162,7 @@ path_continuous_u = true
 path_u_distance = 1.0
 path_joined = false
 
-[node name="CSGPolygon3D2" type="CSGPolygon3D" parent="pipes and shit"]
+[node name="CSGPolygon3D2" type="CSGPolygon3D" parent="pipes and stuff"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.85111, 0)
 use_collision = true
 collision_layer = 3
@@ -176,10 +179,39 @@ path_continuous_u = true
 path_u_distance = 1.0
 path_joined = false
 
-[node name="Path3D" type="Path3D" parent="pipes and shit"]
+[node name="Path3D" type="Path3D" parent="pipes and stuff"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.41879, 9.53674e-07, 6.73694)
 curve = SubResource("Curve3D_woyt3")
 
-[node name="Path3D2" type="Path3D" parent="pipes and shit"]
+[node name="Path3D2" type="Path3D" parent="pipes and stuff"]
 transform = Transform3D(0.898557, 0, -0.438857, 0, 1, 0, 0.438857, 0, 0.898557, 0.584374, 2.51042, 3.13203)
 curve = SubResource("Curve3D_u1iq3")
+
+[node name="trees" type="Node3D" parent="."]
+
+[node name="gametree1-blobbed" parent="trees" instance=ExtResource("4_5f64g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.15277, 0.201133, -35.3124)
+
+[node name="gametree_1_1" parent="trees" instance=ExtResource("4_v4dcd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.60444, 0.2, -34.266)
+
+[node name="gametree_1_2" parent="trees" instance=ExtResource("4_v4dcd")]
+transform = Transform3D(0.250752, 0, -0.968051, 0, 1, 0, 0.968051, 0, 0.250752, 12.6161, 0.2, -33.0492)
+
+[node name="gametree_1_3" parent="trees" instance=ExtResource("4_v4dcd")]
+transform = Transform3D(-0.937471, 0.127084, -0.324033, 0.134332, 0.990936, -7.45058e-09, 0.321096, -0.043528, -0.946046, 10.4681, -0.751786, -37.1454)
+
+[node name="gametree_2_1" parent="trees" instance=ExtResource("5_5av75")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.03439, 0.2, -38.4194)
+
+[node name="gametree_2_2" parent="trees" instance=ExtResource("5_5av75")]
+transform = Transform3D(-0.180073, 0, -0.983653, 0, 1, 0, 0.983653, 0, -0.180073, 16.7523, 0.2, -36.4197)
+
+[node name="gametree_2_3" parent="trees" instance=ExtResource("5_5av75")]
+transform = Transform3D(-0.242596, 0.0169531, -1.0833, 0.105247, 1.20511, 0, 1.32519, -0.0926069, -0.198315, -0.923664, 0.0897859, -1.41897)
+
+[node name="gametree_2_4" parent="trees" instance=ExtResource("5_5av75")]
+transform = Transform3D(1.32351, 0.0524609, 0.216264, -0.00911915, 0.931755, -0.26216, -0.274783, 0.221758, 1.05035, -0.592332, 0.0897863, -1.21428)
+
+[node name="PlayerSpawnPoint" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.504482, 10.3634, -35.2855)

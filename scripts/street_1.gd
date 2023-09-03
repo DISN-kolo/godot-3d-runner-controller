@@ -5,7 +5,7 @@ extends Node3D
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	self.add_child(player)
-	player.set_position(Vector3(0, 1, 0))
+	player.set_position($PlayerSpawnPoint.position)
 	
 func _process(delta):
 	if Input.is_action_just_pressed("ui_cancel"):

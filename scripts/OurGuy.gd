@@ -17,10 +17,10 @@ var fresh_jump = 1.0 #prevent climb-jumps
 #const BOB_AMP = 0.02
 #var t_bob = 0.0
 
-#fov
-const FOV_BASE = 90
-const FOV_CHANGE = 1
-const FOV_ZOOM = 35.0
+##fov
+#const FOV_BASE = 90
+#const FOV_CHANGE = 1
+#const FOV_ZOOM = 35.0
 var movement_multiplier = 1.0 # for crouching
 
 
@@ -241,12 +241,12 @@ func _physics_process(delta):
 					'is sprinting: ' + str(is_sprinting) + '\n' +
 					'(not is_sliding) or slide_jump_allowed: ' + str(((not is_sliding) or slide_jump_allowed)))
 	
-	# camera fov
-	var fov_velocity_clamped = clamp(Vector2(velocity.x, velocity.z).length(), 0, SPRINT_SPEED * 2)
-	var fov_target = FOV_BASE + FOV_CHANGE * fov_velocity_clamped
-	if Input.is_action_pressed("zoom"): #zoomy zooms
-		fov_target = FOV_ZOOM
-	camera.fov = lerp(camera.fov, fov_target, 20.0 * delta)
+#	# camera fov
+#	var fov_velocity_clamped = clamp(Vector2(velocity.x, velocity.z).length(), 0, SPRINT_SPEED * 2)
+#	var fov_target = FOV_BASE + FOV_CHANGE * fov_velocity_clamped
+#	if Input.is_action_pressed("zoom"): #zoomy zooms
+#		fov_target = FOV_ZOOM
+#	camera.fov = lerp(camera.fov, fov_target, 20.0 * delta)
 
 func make_me_crouch(yes:bool):
 	if yes:

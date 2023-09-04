@@ -59,9 +59,9 @@ collision_mask = 3
 shape = SubResource("ConcavePolygonShape3D_5vble")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Cube"]
-transform = Transform3D(0.717725, 0.696326, 0, -0.696326, 0.717725, 0, 0, 0, 1, 14.4905, 0.525397, -5.49356)
+transform = Transform3D(0.717725, 0.696326, 0, -0.696326, 0.717725, 0, 0, 0, 1, 13.2177, 2.07297, -5.49356)
 visible = false
 use_collision = true
 collision_layer = 3
 collision_mask = 3
-size = Vector3(11.6951, 1, 5.11042)
+size = Vector3(11.695, 1, 4.19)
